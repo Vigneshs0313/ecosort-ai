@@ -72,18 +72,18 @@ export default function Dashboard() {
           <div className="mt-8 grid gap-5 lg:grid-cols-2">
             <section className="card p-5"><h2 className="font-bold">Category distribution</h2>
               <div className="h-64" role="img" aria-label="Pie chart of scans by category">
-                <ResponsiveContainer><PieChart><Pie data={pie} dataKey="value" nameKey="name" innerRadius={50} outerRadius={90} paddingAngle={2}>{pie.map(d => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer>
+                <ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={pie} dataKey="value" nameKey="name" innerRadius={50} outerRadius={90} paddingAngle={2}>{pie.map(d => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer>
               </div>
               <div className="flex flex-wrap gap-3 text-xs">{pie.map(d => <span key={d.name} className="flex items-center gap-1"><i className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: d.color }} />{d.name} {d.value}</span>)}</div>
             </section>
             <section className="card p-5"><h2 className="font-bold">Items scanned by category</h2>
               <div className="h-64" role="img" aria-label="Bar chart of scans by category">
-                <ResponsiveContainer><BarChart data={bars}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="name" fontSize={12} /><YAxis allowDecimals={false} fontSize={12} /><Tooltip /><Bar dataKey="scans" radius={[6, 6, 0, 0]}>{bars.map(d => <Cell key={d.name} fill={d.color} />)}</Bar></BarChart></ResponsiveContainer>
+                <ResponsiveContainer width="100%" height="100%"><BarChart data={bars}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="name" fontSize={12} /><YAxis allowDecimals={false} fontSize={12} /><Tooltip /><Bar dataKey="scans" radius={[6, 6, 0, 0]}>{bars.map(d => <Cell key={d.name} fill={d.color} />)}</Bar></BarChart></ResponsiveContainer>
               </div>
             </section>
             <section className="card p-5"><h2 className="font-bold">Daily scanning activity</h2>
               <div className="h-64" role="img" aria-label="Line chart of scans per day">
-                <ResponsiveContainer><LineChart data={daily}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="day" fontSize={12} /><YAxis allowDecimals={false} fontSize={12} /><Tooltip /><Line type="monotone" dataKey="scans" stroke="#16A34A" strokeWidth={3} dot={{ r: 4 }} /></LineChart></ResponsiveContainer>
+                <ResponsiveContainer width="100%" height="100%"><LineChart data={daily}><CartesianGrid strokeDasharray="3 3" vertical={false} /><XAxis dataKey="day" fontSize={12} /><YAxis allowDecimals={false} fontSize={12} /><Tooltip /><Line type="monotone" dataKey="scans" stroke="#16A34A" strokeWidth={3} dot={{ r: 4 }} /></LineChart></ResponsiveContainer>
               </div>
             </section>
             <section className="card p-5"><h2 className="font-bold">Recyclable vs non-recyclable</h2>

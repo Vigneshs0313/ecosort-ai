@@ -7,6 +7,8 @@ import Categories from './pages/Categories'
 import Guide from './pages/Guide'
 import About from './pages/About'
 
+import ErrorBoundary from './components/ErrorBoundary'
+
 const Scanner = lazy(() => import('./pages/Scanner'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 
@@ -18,18 +20,20 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-2 focus:rounded focus:bg-white focus:p-2">Skip to content</a>
       <Navbar />
       <main id="main" className="flex-1">
-        <Suspense fallback={<p className="container-x py-20 text-center text-slate-500">Loading…</p>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/scanner" element={<Scanner />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/categories/:id" element={<Categories />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-        </Suspense>
+        <ErrorBoundary fallbackTitle="This page encountered an error">
+          <Suspense fallback={<p className="container-x py-20 text-center text-slate-500">Loading…</p>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/scanner" element={<Scanner />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/categories/:id" element={<Categories />} />
+              <Route path="/guide" element={<Guide />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>
