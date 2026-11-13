@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+p-lock.yaml
+
+# Production build
+dist/
+*.orig
+
+# Environment variables
+.env*
+# If you're using dotenv
+!.env.example
+
+# IDE
+.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+
+# Local storage / database backups
+.localStorage*
+
+# TypeScript
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
