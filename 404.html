@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoSort AI</title>
+    <script>
+      // Single Page App redirect for GitHub Pages
+      // Redirects non-root requests back to the base path with HashRouter
+      const segmentCount = 1; // repository name: /ecosort-ai/
+      const location = window.location;
+      const pathSegments = location.pathname.split('/').filter(Boolean);
+      const repoPath = pathSegments.slice(0, segmentCount).join('/');
+      const routePath = pathSegments.slice(segmentCount).join('/');
+      const search = location.search ? location.search : '';
+      const hash = routePath ? '#/' + routePath : (location.hash || '#/');
+      location.replace('/' + (repoPath ? repoPath + '/' : '') + search + hash);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to EcoSort AI...</p>
+  </body>
+</html>
