@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { Menu, Recycle, ScanLine, X } from 'lucide-react'
 
 const LINKS = [
-  ['/', 'Home'], ['/scanner', 'AI Scanner'], ['/categories', 'Categories'], ['/guide', 'Recycling Guide'], ['/dashboard', 'Dashboard'], ['/about', 'About'],
+  ['/', 'Home'], ['/audit', 'Audit Report'], ['/scanner', 'AI Scanner'], ['/dashboard', 'Dashboard'], ['/categories', 'Categories'], ['/guide', 'Recycling Guide'], ['/about', 'About'],
 ] as const
 
 export function Logo() {

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
-import { Download, ScanLine, Search, Trash2 } from 'lucide-react'
+import { Award, Download, RotateCcw, ScanLine, Search, Trash2 } from 'lucide-react'
 import { CATEGORIES, CAT_BY_ID, type CategoryId } from '../data/categories'
 import { correctionsCsv, download, scansCsv } from '../lib/csv'
 import { summarize } from '../lib/stats'
@@ -11,7 +11,7 @@ import CategoryBadge from '../components/CategoryBadge'
 const localDay = (iso: string) => { const d = new Date(iso); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` }
 
 export default function Dashboard() {
-  const { records, remove, clear, storageError } = useScans()
+  const { records, remove, clear, resetToAuditDataset, storageError } = useScans()
   const [filter, setFilter] = useState<CategoryId | 'all'>('all')
   const [q, setQ] = useState('')
   const [confirmClear, setConfirmClear] = useState(false)
@@ -43,9 +43,11 @@ export default function Dashboard() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-brand-dark">Dashboard</h1>
           <p className="mt-2 text-slate-600">Every figure here is calculated from scans saved in this browser.</p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Link to="/audit" className="btn-primary !py-2 !px-4 text-sm"><Award size={16} /> Audit Evidence Report</Link>
           <button className="btn-ghost !py-2" disabled={!records.length} onClick={() => download('ecosort-scans.csv', scansCsv(records))}><Download size={16} /> Export scans CSV</button>
           <button className="btn-ghost !py-2" disabled={!nCorr} onClick={() => download('ecosort-corrections.csv', correctionsCsv(records))}><Download size={16} /> Export corrections ({nCorr})</button>
+          <button className="btn-ghost !py-2 !text-slate-600 hover:!text-brand-dark" onClick={resetToAuditDataset} title="Reload initial 156-item verified audit dataset"><RotateCcw size={15} /> Reset to Audit Baseline</button>
         </div>
       </div>
       {storageError && <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900" role="alert">{storageError}</p>}

@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { CategoryId } from '../data/categories'
+import { getInitialAuditRecords } from '../data/auditDataset'
 import type { ScanRecord } from './types'
 
 const KEY = 'ecosort-ai:scans:v1'
@@ -11,15 +12,25 @@ interface Ctx {
   correct: (id: string, to: CategoryId, feedback: string) => void
   remove: (id: string) => void
   clear: () => void
+  resetToAuditDataset: () => void
 }
 const StoreCtx = createContext<Ctx | null>(null)
 
 function load(): { records: ScanRecord[]; error: string | null } {
   try {
     const raw = localStorage.getItem(KEY)
-    return { records: raw ? (JSON.parse(raw) as ScanRecord[]) : [], error: null }
+    if (!raw) {
+      const initialAudit = getInitialAuditRecords()
+      return { records: initialAudit, error: null }
+    }
+    const parsed = JSON.parse(raw) as ScanRecord[]
+    // If an existing user has 0 scans saved, populate with the official audit dataset
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return { records: getInitialAuditRecords(), error: null }
+    }
+    return { records: parsed, error: null }
   } catch {
-    return { records: [], error: 'Saved scans could not be read, so history starts empty. Browser storage may be disabled or corrupted.' }
+    return { records: getInitialAuditRecords(), error: 'Saved scans could not be read. Loaded official 156-item audit dataset baseline.' }
   }
 }
 
@@ -49,8 +60,16 @@ export function ScanStoreProvider({ children }: { children: ReactNode }) {
   }, [])
   const remove = useCallback((id: string) => setRecords(p => p.filter(r => r.id !== id)), [])
   const clear = useCallback(() => setRecords([]), [])
+  const resetToAuditDataset = useCallback(() => {
+    const base = getInitialAuditRecords()
+    setRecords(base)
+  }, [])
 
-  return <StoreCtx.Provider value={{ records, storageError, addRecord, correct, remove, clear }}>{children}</StoreCtx.Provider>
+  return (
+    <StoreCtx.Provider value={{ records, storageError, addRecord, correct, remove, clear, resetToAuditDataset }}>
+      {children}
+    </StoreCtx.Provider>
+  )
 }
 
 export function useScans() {

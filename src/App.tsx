@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Categories from './pages/Categories'
 import Guide from './pages/Guide'
 import About from './pages/About'
+import AuditReport from './pages/AuditReport'
 
 import ErrorBoundary from './components/ErrorBoundary'
 
@@ -24,6 +25,7 @@ export default function App() {
           <Suspense fallback={<p className="container-x py-20 text-center text-slate-500">Loading…</p>}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/audit" element={<AuditReport />} />
               <Route path="/scanner" element={<Scanner />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/categories/:id" element={<Categories />} />
